@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Интернет-магазин на 1С-Битрикс — ТЗ · План · Смета</title>
+<meta name="description" content="ТЗ, план разработки и смета для интернет-магазина на 1С-Битрикс. Премиум-минималистичная презентация для заказчика." />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#0b0f14;
+    --card:#07101a;
+    --muted:#9fb2c7;
+    --accent:#62e0c7;
+    --accent-2:#89f0ff;
+    --glass: rgba(255,255,255,0.03);
+    --radius:16px;
+    --maxw:1150px;
+    --mono: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:var(--mono);
+    background: linear-gradient(180deg, #07121a 0%, #031018 100%);
+    color:#eaf6f9;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    padding:36px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--maxw);
+  }
+
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    margin-bottom:20px;
+  }
+  .brand{
+    display:flex;
+    gap:16px;
+    align-items:center;
+    margin-left: 3%;
+  }
+  .logo{
+    width:56px;height:56px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;color:#022;font-weight:800;font-size:18px;
+    box-shadow:0 12px 30px rgba(98,224,199,0.12);
+  }
+  h1{font-size:20px;margin:0}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow: 0 18px 50px rgba(2,6,10,0.6);
+    overflow:hidden;
+  }
+
+  .tabs{
+    display:flex;
+    gap:12px;
+    margin-bottom:18px;
+    align-items:center;
+  }
+  .tab{
+    background:transparent;
+    border-radius:12px;
+    padding:10px 14px;
+    font-weight:600;
+    color:var(--muted);
+    cursor:pointer;
+    user-select:none;
+    transition:all .16s ease;
+    border: 1px solid transparent;
+  }
+  .tab:hover{transform:translateY(-3px)}
+  .tab.active{
+    color:#022;
+    background:linear-gradient(90deg,var(--accent), var(--accent-2));
+    box-shadow:0 10px 30px rgba(98,224,199,0.08);
+  }
+
+  main{margin-top:6px}
+  .panel{display:none;padding:18px;border-radius:12px;}
+  .panel.active{display:block}
+
+  h2{margin:0 0 8px 0;font-size:16px}
+  h3{margin:10px 0 6px 0;font-size:14px}
+  .muted{color:var(--muted);font-size:13px}
+
+  .layout{
+    display:grid;
+    grid-template-columns:1fr 360px;
+    gap:18px;
+    align-items:start;
+  }
+  @media (max-width:980px){ .layout{grid-template-columns:1fr} }
+
+  .section{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    padding:16px;border-radius:12px;
+  }
+
+  .aside{
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
+    padding:14px;border-radius:12px;
+  }
+
+  ul.clean{padding-left:16px;margin:8px 0}
+  li{margin:8px 0}
+  .small{font-size:13px;color:var(--muted)}
+  .badge{display:inline-block;background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;color:var(--accent);font-weight:700;margin-right:6px}
+  .callout{
+    margin-top:14px;padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(98,224,199,0.03), rgba(137,240,255,0.02));
+    color:var(--muted);font-weight:600;
+  }
+
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{padding:10px 8px;text-align:left;font-size:14px;color:rgba(230,246,249,0.95)}
+  tr+tr td{border-top:1px dashed rgba(255,255,255,0.03)}
+
+  /* new: horizontal scroll */
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .table-scroll table {
+    min-width: 600px;
+  }
+
+  /* estimate inner tabs */
+  .inner-tabs{display:flex;gap:8px;margin-bottom:14px}
+  .inner-tab{background:transparent;border-radius:10px;padding:8px 10px;color:var(--muted);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .inner-tab.active{background:linear-gradient(90deg, rgba(98,224,199,0.06), rgba(137,240,255,0.03));color:rgb(0, 158, 158);border-color:rgba(98,224,199,0.12)}
+
+  .estimate-wrap{display:grid;grid-template-columns:1fr 300px;gap:12px}
+  @media (max-width:980px){ .estimate-wrap{grid-template-columns:1fr} }
+
+  .box{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px;border-radius:10px}
+
+  .total{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px;
+    border-radius:10px;
+    margin-top:12px;
+    background:linear-gradient(90deg, rgba(98,224,199,0.03), rgba(137,240,255,0.02));
+    font-weight:700;
+    color:rgb(0, 151, 151);
+  }
+
+  /* improved responsive total */
+  @media (max-width: 640px) {
+    .total {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+    }
+  }
+
+  .cta{display:inline-block;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#022;font-weight:700;text-decoration:none}
+
+  .note{font-size:13px;color:var(--muted);margin-top:10px}
+
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+  .fade-in{opacity:0;transform:translateY(8px);animation: enter .45s forwards}
+  @keyframes enter{to{opacity:1;transform:none}}
+
+  /* additional mobile improvements */
+  @media (max-width:640px){
+    body { padding: 26px 14px; }
+    .logo{width:48px;height:48px;font-size:16px}
+    h1{font-size:18px}
+    .card, .section, .aside, .box { padding: 18px; }
+  }
+
+  @media (max-width:480px){
+    .wrap { max-width: 100%; }
+    .card { padding: 20px 16px; }
+  }
+
+</style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div>
+          <h1>Интернет-магазин на 1С-Битрикс</h1>
+          <p class="lead">ТЗ, план разработки и смета</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="card fade-in">
+      <div class="tabs" role="tablist" aria-label="Основные вкладки">
+        <div class="tab active" data-tab="tz">ТЗ</div>
+        <div class="tab" data-tab="plan">План разработки</div>
+        <div class="tab" data-tab="estimate">Смета</div>
+      </div>
+
+      <main>
+
+        <!-- ТЗ -->
+        <section id="tz" class="panel active">
+          <div class="layout">
+            <div class="section">
+              <h2>Техническое задание — кратко и по делу</h2>
+              <p class="muted">Платформа: <strong>1С-Битрикс: Управление сайтом</strong>. Интеграция со складом/CRM (Битрикс24). Дизайн — уникальный, адаптивный.</p>
+
+              <h3>Структура проекта</h3>
+              <ul class="clean">
+                <li>Главная: баннеры, подборки, УТП, блок «Компания».</li>
+                <li>Каталог: категории, фильтры, сортировка.</li>
+                <li>Категории: SEO-текст, карточки.</li>
+                <li>Карточка товара: галерея, SKU, отзывы, «Похожие товары».</li>
+                <li>Корзина: пересчёт, промокод.</li>
+                <li>Чек-аут: одностраничный.</li>
+                <li>Личный кабинет: профиль, заказы.</li>
+                <li>Инфостраницы: О компании, Контакты, Оферта и др.</li>
+              </ul>
+
+              <h3>Интеграции</h3>
+              <ul class="clean">
+                <li>CRM/склад: Битрикс24</li>
+                <li>Оплата: 2 провайдера</li>
+                <li>Доставка: 1–2 службы</li>
+                <li>Уведомления в почту и CRM</li>
+              </ul>
+
+              <h3>Дизайн & Фронтенд</h3>
+              <ul class="clean">
+                <li>Premium-минимализм</li>
+                <li>Адаптив: desktop → tablet → mobile</li>
+                <li>Анимации</li>
+              </ul>
+
+              <h3>Бэкенд</h3>
+              <ul class="clean">
+                <li>Инфоблоки, товарные свойства, SKU</li>
+                <li>Шаблоны каталога и карточки</li>
+                <li>Интеграция обмена</li>
+              </ul>
+
+              <h3>Безопасность</h3>
+              <ul class="clean">
+                <li>SSL, CSRF</li>
+                <li>reCAPTCHA</li>
+                <li>Оптимизация скорости</li>
+              </ul>
+
+              <p class="small">Итог: рабочий, быстрый, адаптивный интернет-магазин с интеграциями.</p>
+            </div>
+
+            <aside class="aside">
+              <h3 style="margin-top:12px" class="badge">MVP</h3>
+              <ul class="clean small">
+                <li>Каталог + товар</li>
+                <li>Корзина + чек-аут</li>
+                <li>Оплата + CRM</li>
+                <li>Адаптив</li>
+              </ul>
+
+              <div class="callout">
+                Включены блоки «Похожие товары» и «Компания».
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- План разработки -->
+        <section id="plan" class="panel">
+          <div class="section">
+            <h2>План разработки — 12–16 недель</h2>
+            <p class="muted">Roadmap реализации проекта.</p>
+
+            <div class="table-scroll">
+            <table>
+              <thead><tr><th style="width:90px">Неделя</th><th>Фокус</th><th>КТ</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Аналитика</td><td>Прототипы</td></tr>
+                <tr><td>2</td><td>Дизайн</td><td>Главная/каталог</td></tr>
+                <tr><td>3</td><td>Верстка</td><td>Главная</td></tr>
+                <tr><td>4</td><td>Карточка</td><td>SKU, похожие</td></tr>
+                <tr><td>5</td><td>Корзина/чек-аут</td><td>ЛК</td></tr>
+                <tr><td>6</td><td>Интеграции</td><td>Оплата/доставка</td></tr>
+                <tr><td>7</td><td>CRM</td><td>Обмен</td></tr>
+                <tr><td>8</td><td>Админка</td><td>Права/импорт</td></tr>
+                <tr><td>9</td><td>SEO</td><td>GA4/данные</td></tr>
+                <tr><td>10</td><td>QA</td><td>Чек-лист</td></tr>
+                <tr><td>11</td><td>Нагрузка</td><td>20–50 users</td></tr>
+                <tr><td>12</td><td>Запуск</td><td>Прод</td></tr>
+              </tbody>
+            </table>
+            </div>
+
+            <h3 style="margin-top:12px">Тестирование</h3>
+            <ul class="clean">
+              <li>Каталог, фильтры, поиск</li>
+              <li>Товар, SKU, галерея</li>
+              <li>Корзина, чек-аут</li>
+              <li>Оплата успешная/неуспешная</li>
+              <li>CRM: статусы, webhooks</li>
+              <li>Адаптив: iOS/Android</li>
+              <li>Нагрузка</li>
+              <li>SEO: sitemap, микроразметка</li>
+              <li>Безопасность</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Смета -->
+        <section id="estimate" class="panel">
+          <div class="section">
+            <h2>Смета — два варианта</h2>
+            <p class="muted">Стоимость указана ориентировочно.</p>
+
+            <div class="inner-tabs">
+              <div class="inner-tab active" data-inner="min">Минимум</div>
+              <div class="inner-tab" data-inner="opt">Оптимум</div>
+            </div>
+
+            <div class="estimate-wrap">
+              <div>
+                <div class="box" id="minBox">
+                  <h3>Минимум — состав</h3>
+                  <ul class="clean">
+                    <li>Прототипы</li>
+                    <li>Дизайн ключевых экранов</li>
+                    <li>Верстка</li>
+                    <li>Bitrix: инфоблоки/шаблоны</li>
+                    <li>CRM-интеграция</li>
+                    <li>Оплата, 1 служба доставки</li>
+                    <li>QA, запуск</li>
+                  </ul>
+
+                  <h3 style="margin-top:10px">Часы</h3>
+                  <table>
+                    <tr><td>Аналитика</td><td>30</td></tr>
+                    <tr><td>Дизайн</td><td>60</td></tr>
+                    <tr><td>Верстка</td><td>80</td></tr>
+                    <tr><td>Backend</td><td>90</td></tr>
+                    <tr><td>Интеграции</td><td>50</td></tr>
+                    <tr><td>SEO</td><td>15</td></tr>
+                    <tr><td>QA</td><td>25</td></tr>
+                  </table>
+                </div>
+
+                <div class="box" id="optBox" style="display:none">
+                  <h3>Оптимум — состав</h3>
+                  <ul class="clean">
+                    <li>Полный UX/UI</li>
+                    <li>Анимации</li>
+                    <li>Оптимизация скорости</li>
+                    <li>Доп. интеграции</li>
+                    <li>Нагрузочное тестирование</li>
+                    <li>1 месяц поддержки</li>
+                  </ul>
+
+                  <h3 style="margin-top:10px">Часы</h3>
+                  <table>
+                    <tr><td>Аналитика</td><td>40</td></tr>
+                    <tr><td>Дизайн</td><td>100</td></tr>
+                    <tr><td>Верстка</td><td>120</td></tr>
+                    <tr><td>Backend</td><td>120</td></tr>
+                    <tr><td>Интеграции</td><td>80</td></tr>
+                    <tr><td>SEO</td><td>25</td></tr>
+                    <tr><td>QA</td><td>35</td></tr>
+                  </table>
+                </div>
+              </div>
+
+              <aside class="box">
+                <h3>Итоги</h3>
+
+                <div id="totMin" class="total">
+                  <div>Минимум:</div>
+                  <div>~330 ч <br> ~330 000 ₽</div>
+                </div>
+
+                <div id="totOpt" class="total" style="display:none">
+                  <div>Оптимум:</div>
+                  <div>~520 ч <br> ~480 000–600 000 ₽</div>
+                </div>
+
+                <p class="note">Лицензия 1С-Битрикс и хостинг — отдельно. Предоплата 25%.</p>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+<script>
+  // Tabs
+  (function(){
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.panel');
+    tabs.forEach(tab=>{
+      tab.addEventListener('click', ()=> {
+        tabs.forEach(t=>t.classList.remove('active'));
+        tab.classList.add('active');
+        const id = tab.getAttribute('data-tab');
+        panels.forEach(p=>p.classList.toggle('active', p.id===id));
+        document.querySelector('.card').scrollIntoView({behavior:'smooth'});
+      });
+    });
+
+    // inner estimate tabs
+    const innerTabs = document.querySelectorAll('.inner-tab');
+    innerTabs.forEach(it=>{
+      it.addEventListener('click', ()=> {
+        innerTabs.forEach(x=>x.classList.remove('active'));
+        it.classList.add('active');
+        const key = it.getAttribute('data-inner');
+        document.getElementById('minBox').style.display = key==='min' ? '' : 'none';
+        document.getElementById('optBox').style.display = key==='opt' ? '' : 'none';
+        document.getElementById('totMin').style.display = key==='min' ? '' : 'none';
+        document.getElementById('totOpt').style.display = key==='opt' ? '' : 'none';
+      });
+    });
+
+    // keyboard shortcuts 1/2/3
+    window.addEventListener('keydown', (e)=>{
+      if(e.key==='1') document.querySelector('.tab[data-tab="tz"]').click();
+      if(e.key==='2') document.querySelector('.tab[data-tab="plan"]').click();
+      if(e.key==='3') document.querySelector('.tab[data-tab="estimate"]').click();
+    });
+  })();
+</script>
+</body>
+</html>
+
